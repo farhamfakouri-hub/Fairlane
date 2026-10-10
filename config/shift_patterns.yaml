@@ -1,0 +1,69 @@
+grid_minutes: 5
+solver_grid_minutes: 30
+min_register_minutes: 180
+max_register_minutes: 570
+min_block_minutes: 180
+weekday:
+  families:
+  - name: morning
+    kind: continuous
+    enabled: true
+    start_window:
+    - 08:30
+    - '10:10'
+    end_window:
+    - '12:55'
+    - '16:15'
+    end_anchor: null
+    first_end_window: null
+    cut_minutes: []
+  - name: evening
+    kind: continuous
+    enabled: true
+    start_window:
+    - '14:15'
+    - '17:40'
+    end_window: null
+    end_anchor: close
+    first_end_window: null
+    cut_minutes: []
+  - name: split
+    kind: split
+    enabled: true
+    start_window:
+    - 09:30
+    - 09:40
+    end_window:
+    - '19:30'
+    - '20:10'
+    end_anchor: null
+    first_end_window:
+    - '13:20'
+    - '13:40'
+    cut_minutes:
+    - 60
+    - 90
+  - name: midday
+    kind: continuous
+    enabled: false
+    start_window:
+    - '10:30'
+    - '12:00'
+    end_window:
+    - '14:30'
+    - '16:30'
+    end_anchor: null
+    first_end_window: null
+    cut_minutes: []
+sunday:
+  families:
+  - name: sunday_morning
+    kind: continuous
+    enabled: true
+    start_window:
+    - 08:30
+    - 09:30
+    end_window: null
+    end_anchor: close
+    first_end_window: null
+    cut_minutes: []

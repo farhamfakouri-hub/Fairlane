@@ -1,0 +1,1537 @@
+{
+  "components": {
+    "schemas": {
+      "AssignmentOut": {
+        "additionalProperties": false,
+        "description": "A worker's shift on a day, with its reasons.",
+        "properties": {
+          "blocks": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Blocks",
+            "type": "array"
+          },
+          "day": {
+            "format": "date",
+            "title": "Day",
+            "type": "string"
+          },
+          "paid_hours": {
+            "title": "Paid Hours",
+            "type": "number"
+          },
+          "pattern_id": {
+            "title": "Pattern Id",
+            "type": "string"
+          },
+          "reasons": {
+            "items": {
+              "$ref": "#/components/schemas/ReasonOut"
+            },
+            "title": "Reasons",
+            "type": "array"
+          },
+          "worker_id": {
+            "title": "Worker Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "worker_id",
+          "day",
+          "pattern_id",
+          "blocks",
+          "paid_hours",
+          "reasons"
+        ],
+        "title": "AssignmentOut",
+        "type": "object"
+      },
+      "AuditOut": {
+        "additionalProperties": false,
+        "description": "A line of the audit log.",
+        "properties": {
+          "at": {
+            "title": "At",
+            "type": "string"
+          },
+          "detail": {
+            "additionalProperties": true,
+            "title": "Detail",
+            "type": "object"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "record_id": {
+            "title": "Record Id",
+            "type": "integer"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          }
+        },
+        "required": [
+          "record_id",
+          "at",
+          "kind",
+          "subject",
+          "detail"
+        ],
+        "title": "AuditOut",
+        "type": "object"
+      },
+      "BreakMoveIn": {
+        "additionalProperties": false,
+        "description": "A requested move of a break; it is applied only when apply is true.",
+        "properties": {
+          "apply": {
+            "default": false,
+            "title": "Apply",
+            "type": "boolean"
+          },
+          "block_index": {
+            "default": 0,
+            "title": "Block Index",
+            "type": "integer"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "start": {
+            "maximum": 1440.0,
+            "minimum": 0.0,
+            "title": "Start",
+            "type": "integer"
+          },
+          "worker_id": {
+            "title": "Worker Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "worker_id",
+          "start"
+        ],
+        "title": "BreakMoveIn",
+        "type": "object"
+      },
+      "BreakOut": {
+        "additionalProperties": false,
+        "description": "A scheduled break.",
+        "properties": {
+          "block_index": {
+            "title": "Block Index",
+            "type": "integer"
+          },
+          "minutes": {
+            "title": "Minutes",
+            "type": "integer"
+          },
+          "start": {
+            "title": "Start",
+            "type": "integer"
+          },
+          "worker_id": {
+            "title": "Worker Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "worker_id",
+          "block_index",
+          "start",
+          "minutes"
+        ],
+        "title": "BreakOut",
+        "type": "object"
+      },
+      "ChangeOut": {
+        "additionalProperties": false,
+        "description": "A change of post inside a proposal.",
+        "properties": {
+          "after": {
+            "title": "After",
+            "type": "string"
+          },
+          "before": {
+            "title": "Before",
+            "type": "string"
+          },
+          "end": {
+            "title": "End",
+            "type": "integer"
+          },
+          "start": {
+            "title": "Start",
+            "type": "integer"
+          },
+          "worker_id": {
+            "title": "Worker Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "worker_id",
+          "start",
+          "end",
+          "before",
+          "after"
+        ],
+        "title": "ChangeOut",
+        "type": "object"
+      },
+      "DailyOut": {
+        "additionalProperties": false,
+        "description": "The plan of one day: checks, alerts, breaks, posts, handovers and relief.",
+        "properties": {
+          "alerts": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Alerts",
+            "type": "array"
+          },
+          "breaks": {
+            "items": {
+              "$ref": "#/components/schemas/BreakOut"
+            },
+            "title": "Breaks",
+            "type": "array"
+          },
+          "day": {
+            "format": "date",
+            "title": "Day",
+            "type": "string"
+          },
+          "handovers": {
+            "items": {
+              "$ref": "#/components/schemas/HandoverOut"
+            },
+            "title": "Handovers",
+            "type": "array"
+          },
+          "metrics": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "title": "Metrics",
+            "type": "object"
+          },
+          "relief": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Relief",
+            "type": "array"
+          },
+          "report": {
+            "$ref": "#/components/schemas/ReportOut"
+          },
+          "segments": {
+            "items": {
+              "$ref": "#/components/schemas/SegmentOut"
+            },
+            "title": "Segments",
+            "type": "array"
+          }
+        },
+        "required": [
+          "day",
+          "report",
+          "alerts",
+          "breaks",
+          "segments",
+          "handovers",
+          "relief",
+          "metrics"
+        ],
+        "title": "DailyOut",
+        "type": "object"
+      },
+      "DecisionIn": {
+        "additionalProperties": false,
+        "description": "A manager's decision on a proposal.",
+        "properties": {
+          "accept": {
+            "title": "Accept",
+            "type": "boolean"
+          },
+          "note": {
+            "default": "",
+            "title": "Note",
+            "type": "string"
+          }
+        },
+        "required": [
+          "accept"
+        ],
+        "title": "DecisionIn",
+        "type": "object"
+      },
+      "EditIn": {
+        "additionalProperties": false,
+        "description": "A requested change of a shift, with the reason and who asked.",
+        "properties": {
+          "by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "By"
+          },
+          "day": {
+            "format": "date",
+            "title": "Day",
+            "type": "string"
+          },
+          "pattern_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pattern Id"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "worker_id": {
+            "title": "Worker Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "worker_id",
+          "day"
+        ],
+        "title": "EditIn",
+        "type": "object"
+      },
+      "EditOut": {
+        "additionalProperties": false,
+        "description": "Result of checking or applying an edit.",
+        "properties": {
+          "applied": {
+            "title": "Applied",
+            "type": "boolean"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "new_errors": {
+            "items": {
+              "type": "string"
+            },
+            "title": "New Errors",
+            "type": "array"
+          },
+          "report": {
+            "$ref": "#/components/schemas/ReportOut"
+          }
+        },
+        "required": [
+          "applied",
+          "message",
+          "new_errors",
+          "report"
+        ],
+        "title": "EditOut",
+        "type": "object"
+      },
+      "GenerateRequest": {
+        "additionalProperties": false,
+        "description": "Request to generate a roster for a simulated store.",
+        "properties": {
+          "backend": {
+            "anyOf": [
+              {
+                "enum": [
+                  "cp_sat",
+                  "heuristic"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Backend"
+          },
+          "posts_only": {
+            "default": false,
+            "title": "Posts Only",
+            "type": "boolean"
+          },
+          "seed": {
+            "default": 3,
+            "title": "Seed",
+            "type": "integer"
+          },
+          "store": {
+            "default": "small",
+            "enum": [
+              "tiny",
+              "small",
+              "medium",
+              "eval",
+              "full"
+            ],
+            "title": "Store",
+            "type": "string"
+          },
+          "weeks": {
+            "default": 1,
+            "maximum": 3.0,
+            "minimum": 1.0,
+            "title": "Weeks",
+            "type": "integer"
+          }
+        },
+        "title": "GenerateRequest",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "HandoverOut": {
+        "additionalProperties": false,
+        "description": "A change of post at a minute.",
+        "properties": {
+          "from_post": {
+            "title": "From Post",
+            "type": "string"
+          },
+          "minute": {
+            "title": "Minute",
+            "type": "integer"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "replaces": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Replaces"
+          },
+          "to_post": {
+            "title": "To Post",
+            "type": "string"
+          },
+          "worker_id": {
+            "title": "Worker Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "minute",
+          "worker_id",
+          "from_post",
+          "to_post",
+          "reason"
+        ],
+        "title": "HandoverOut",
+        "type": "object"
+      },
+      "HealthOut": {
+        "additionalProperties": false,
+        "description": "Service status and whether a roster exists.",
+        "properties": {
+          "has_roster": {
+            "title": "Has Roster",
+            "type": "boolean"
+          },
+          "shifts": {
+            "title": "Shifts",
+            "type": "integer"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          }
+        },
+        "required": [
+          "status",
+          "has_roster",
+          "version",
+          "shifts"
+        ],
+        "title": "HealthOut",
+        "type": "object"
+      },
+      "ObservationIn": {
+        "additionalProperties": false,
+        "description": "A live reading of the registers at a minute of the day.",
+        "properties": {
+          "arrival_rate": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Arrival Rate"
+          },
+          "busyness": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Busyness",
+            "type": "number"
+          },
+          "logged_in": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Logged In"
+          },
+          "minute": {
+            "maximum": 1440.0,
+            "minimum": 0.0,
+            "title": "Minute",
+            "type": "integer"
+          },
+          "open_registers": {
+            "minimum": 0.0,
+            "title": "Open Registers",
+            "type": "integer"
+          },
+          "waiting": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Waiting",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "minute",
+          "busyness",
+          "open_registers"
+        ],
+        "title": "ObservationIn",
+        "type": "object"
+      },
+      "ProposalOut": {
+        "additionalProperties": false,
+        "description": "A live proposal with its reason, cost, expected waits and changes.",
+        "properties": {
+          "changes": {
+            "items": {
+              "$ref": "#/components/schemas/ChangeOut"
+            },
+            "title": "Changes",
+            "type": "array"
+          },
+          "cost": {
+            "title": "Cost",
+            "type": "integer"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "minute": {
+            "title": "Minute",
+            "type": "integer"
+          },
+          "new_errors": {
+            "items": {
+              "type": "string"
+            },
+            "title": "New Errors",
+            "type": "array"
+          },
+          "note": {
+            "title": "Note",
+            "type": "string"
+          },
+          "proposal_id": {
+            "title": "Proposal Id",
+            "type": "integer"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "state": {
+            "title": "State",
+            "type": "string"
+          },
+          "wait_after": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Wait After"
+          },
+          "wait_before": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Wait Before"
+          }
+        },
+        "required": [
+          "proposal_id",
+          "minute",
+          "kind",
+          "reason",
+          "state",
+          "cost",
+          "wait_before",
+          "wait_after",
+          "new_errors",
+          "note",
+          "changes"
+        ],
+        "title": "ProposalOut",
+        "type": "object"
+      },
+      "ReasonOut": {
+        "additionalProperties": false,
+        "description": "A reason for a shift.",
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "text"
+        ],
+        "title": "ReasonOut",
+        "type": "object"
+      },
+      "ReportOut": {
+        "additionalProperties": false,
+        "description": "Result of a check: counts, uncovered minutes and the violations.",
+        "properties": {
+          "errors": {
+            "title": "Errors",
+            "type": "integer"
+          },
+          "ok": {
+            "title": "Ok",
+            "type": "boolean"
+          },
+          "shortfall_minutes": {
+            "title": "Shortfall Minutes",
+            "type": "number"
+          },
+          "violations": {
+            "items": {
+              "$ref": "#/components/schemas/ViolationOut"
+            },
+            "title": "Violations",
+            "type": "array"
+          },
+          "warnings": {
+            "title": "Warnings",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "ok",
+          "errors",
+          "warnings",
+          "shortfall_minutes",
+          "violations"
+        ],
+        "title": "ReportOut",
+        "type": "object"
+      },
+      "RosterOut": {
+        "additionalProperties": false,
+        "description": "A roster version with its status, notes, checks, fairness measures and shifts.",
+        "properties": {
+          "assignments": {
+            "items": {
+              "$ref": "#/components/schemas/AssignmentOut"
+            },
+            "title": "Assignments",
+            "type": "array"
+          },
+          "backend": {
+            "title": "Backend",
+            "type": "string"
+          },
+          "fairness": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "title": "Fairness",
+            "type": "object"
+          },
+          "notes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Notes",
+            "type": "array"
+          },
+          "relaxed": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Relaxed",
+            "type": "array"
+          },
+          "report": {
+            "$ref": "#/components/schemas/ReportOut"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "version",
+          "status",
+          "backend",
+          "relaxed",
+          "notes",
+          "report",
+          "fairness",
+          "assignments"
+        ],
+        "title": "RosterOut",
+        "type": "object"
+      },
+      "SegmentOut": {
+        "additionalProperties": false,
+        "description": "A stretch of time at one post.",
+        "properties": {
+          "end": {
+            "title": "End",
+            "type": "integer"
+          },
+          "post": {
+            "title": "Post",
+            "type": "string"
+          },
+          "start": {
+            "title": "Start",
+            "type": "integer"
+          },
+          "worker_id": {
+            "title": "Worker Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "worker_id",
+          "start",
+          "end",
+          "post"
+        ],
+        "title": "SegmentOut",
+        "type": "object"
+      },
+      "SwapIn": {
+        "additionalProperties": false,
+        "description": "Two workers who would swap their shifts on a day.",
+        "properties": {
+          "day": {
+            "format": "date",
+            "title": "Day",
+            "type": "string"
+          },
+          "first": {
+            "title": "First",
+            "type": "string"
+          },
+          "second": {
+            "title": "Second",
+            "type": "string"
+          }
+        },
+        "required": [
+          "first",
+          "second",
+          "day"
+        ],
+        "title": "SwapIn",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      },
+      "ViolationOut": {
+        "additionalProperties": false,
+        "description": "One rule violation.",
+        "properties": {
+          "amount": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount"
+          },
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "day": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Day"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "minute": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Minute"
+          },
+          "severity": {
+            "title": "Severity",
+            "type": "string"
+          },
+          "worker_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Worker Id"
+          }
+        },
+        "required": [
+          "code",
+          "severity",
+          "message"
+        ],
+        "title": "ViolationOut",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "description": "Roster, daily plan and live proposals for the cashier team. Every plan is a proposal: nothing changes until a manager accepts it, every override keeps a short reason, and every manual edit is checked by an independent plan checker.",
+    "title": "Shift planner",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/audit": {
+      "get": {
+        "description": "The audit log, optionally of one kind only.",
+        "operationId": "audit_audit_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "kind",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Kind"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/AuditOut"
+                  },
+                  "title": "Response Audit Audit Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Audit",
+        "tags": [
+          "audit"
+        ]
+      }
+    },
+    "/daily/{day}": {
+      "get": {
+        "description": "The plan of one day: breaks, posts, handovers and checks.",
+        "operationId": "daily_daily__day__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "day",
+            "required": true,
+            "schema": {
+              "format": "date",
+              "title": "Day",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Daily",
+        "tags": [
+          "daily"
+        ]
+      }
+    },
+    "/daily/{day}/break": {
+      "post": {
+        "description": "Check a move of a break and, when asked, apply it with a reason.",
+        "operationId": "move_break_daily__day__break_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "day",
+            "required": true,
+            "schema": {
+              "format": "date",
+              "title": "Day",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BreakMoveIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EditOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Move Break",
+        "tags": [
+          "daily"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "description": "Service status and whether a roster exists.",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health",
+        "tags": [
+          "service"
+        ]
+      }
+    },
+    "/live/{day}/observe": {
+      "post": {
+        "description": "Send a live reading of the registers; the planner may answer with proposals.",
+        "operationId": "observe_live__day__observe_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "day",
+            "required": true,
+            "schema": {
+              "format": "date",
+              "title": "Day",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObservationIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ProposalOut"
+                  },
+                  "title": "Response Observe Live  Day  Observe Post",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Observe",
+        "tags": [
+          "live"
+        ]
+      }
+    },
+    "/proposals/{day}": {
+      "get": {
+        "description": "Live proposals made for a day.",
+        "operationId": "proposals_proposals__day__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "day",
+            "required": true,
+            "schema": {
+              "format": "date",
+              "title": "Day",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ProposalOut"
+                  },
+                  "title": "Response Proposals Proposals  Day  Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Proposals",
+        "tags": [
+          "live"
+        ]
+      }
+    },
+    "/proposals/{day}/{proposal_id}/decision": {
+      "post": {
+        "description": "Accept or reject a live proposal.",
+        "operationId": "decide_proposals__day___proposal_id__decision_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "day",
+            "required": true,
+            "schema": {
+              "format": "date",
+              "title": "Day",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "proposal_id",
+            "required": true,
+            "schema": {
+              "title": "Proposal Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DecisionIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProposalOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Decide",
+        "tags": [
+          "live"
+        ]
+      }
+    },
+    "/roster": {
+      "get": {
+        "description": "The current roster with its checks, notes and reasons.",
+        "operationId": "roster_roster_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RosterOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Roster",
+        "tags": [
+          "roster"
+        ]
+      }
+    },
+    "/roster/check": {
+      "post": {
+        "description": "Check a change of one shift against the rules without applying it.",
+        "operationId": "check_roster_check_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EditOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Check",
+        "tags": [
+          "roster"
+        ]
+      }
+    },
+    "/roster/generate": {
+      "post": {
+        "description": "Generate a roster for a simulated store and make it current.",
+        "operationId": "generate_roster_generate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenerateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RosterOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Generate",
+        "tags": [
+          "roster"
+        ]
+      }
+    },
+    "/roster/override": {
+      "post": {
+        "description": "Apply a change of one shift.\n\nIt needs a short reason and must not add rule errors; every attempt is logged.",
+        "operationId": "override_roster_override_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EditOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Override",
+        "tags": [
+          "roster"
+        ]
+      }
+    },
+    "/swaps/check": {
+      "post": {
+        "description": "Check a swap of two workers' shifts on a day without applying it.",
+        "operationId": "swap_swaps_check_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SwapIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EditOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Swap",
+        "tags": [
+          "roster"
+        ]
+      }
+    },
+    "/workers/{worker_id}/plan": {
+      "get": {
+        "description": "A worker's own plan, with breaks and plain-language reasons.",
+        "operationId": "worker_plan_workers__worker_id__plan_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "worker_id",
+            "required": true,
+            "schema": {
+              "title": "Worker Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Worker Plan Workers  Worker Id  Plan Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Worker Plan",
+        "tags": [
+          "workers"
+        ]
+      }
+    }
+  }
+}

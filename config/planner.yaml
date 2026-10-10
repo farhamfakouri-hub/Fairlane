@@ -1,0 +1,235 @@
+seed: 20261004
+start_date: '2026-11-01'
+opening:
+  monday_to_saturday:
+  - 08:30
+  - '21:30'
+  sunday:
+  - 08:30
+  - '12:30'
+rush:
+  weekday_windows:
+  - - '10:30'
+    - '14:00'
+  - - '18:00'
+    - '20:00'
+  friday_saturday_evening_end: '21:00'
+  friday_saturday_morning_window:
+  - 08:00
+  - 09:00
+  sunday_window:
+  - '11:00'
+  - '12:30'
+  quiet_last_minutes: 30
+  month_start_first_day: 28
+  month_start_last_day: 4
+  month_start_extends_evening: true
+season:
+  month_start_arrival: 1.1
+  month_start_service: 1.0
+  christmas_window:
+  - 12-20
+  - 01-03
+  christmas_arrival: 1.35
+  christmas_service: 1.15
+  late_summer_window:
+  - 08-25
+  - 09-07
+  late_summer_arrival: 1.15
+  late_summer_service: 1.05
+  manager_arrival_override: {}
+demand:
+  slot_minutes: 30
+  daily_customers:
+    mon: 1300.0
+    tue: 1250.0
+    wed: 1400.0
+    thu: 1450.0
+    fri: 1800.0
+    sat: 2000.0
+    sun: 460.0
+  rush_intensity: 2.2
+  edge_taper: 0.6
+  level_ewma_alpha: 0.35
+  history_weeks: 8
+  dispersion_k: 60.0
+  day_noise_sd: 0.06
+  quantile_rush: 0.8
+  quantile_calm: 0.5
+  profile_prior_customers: 30.0
+  min_history_weeks: 3
+staffing:
+  service_minutes: 2.0
+  t_target_minutes: 3.0
+  alpha_rush: 0.2
+  alpha_calm: 0.35
+  queue_limit_customers: 5
+  max_registers: 15
+  minimum_open_registers: 2
+  opening_order:
+  - 1
+  - 4
+  - 2
+  - 3
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
+  - 15
+  k_sc_calm: 3
+  k_sc_rush: 5
+  sco_zone1_calm: 1
+  sco_zone1_rush: 2
+  sco_zone2_calm: 2
+  sco_zone2_rush: 3
+  floaters_morning: 2
+  floaters_afternoon: 2
+  floater_switch_time: '14:00'
+  break_share: 0.06
+  safety_multiplier: 1.0
+rules:
+  max_daily_hours: 10.0
+  min_rest_hours: 11.0
+  weekly_rest_hours: 35.0
+  max_weekly_hours: 48.0
+  average_weekly_hours: 44.0
+  average_weeks: 12
+  max_consecutive_days: 6
+  max_cuts_per_day: 1
+  cut_minutes: 60
+  cut_max_minutes: 90
+  hours_tolerance_hours: 1.0
+  min_block_hours: 3.0
+  break_minutes_per_hour: 3.0
+  break_rounding_minutes: 5
+  break_min_block_hours: 3.0
+  break_window_tolerance_minutes: 30
+  max_simultaneous_breaks: 2
+  limit_case_simultaneous_breaks: 3
+  max_break_shift_minutes: 90
+  clock_in_margin_minutes: 10
+  clock_out_margin_minutes: 5
+  margin_tolerance_minutes: 0
+  opening_slack_minutes: 60
+  closing_slack_minutes: 0
+  planning_weeks: 3
+  sunday_mandatory: true
+  history_weeks: 8
+burden:
+  closing: 2
+  sunday: 3
+  saturday: 2
+  split: 2
+  early: 1
+  friday_evening: 1
+  early_before: 09:00
+solver:
+  backend: cp_sat
+  mode: reproducible
+  random_seed: 7
+  num_workers: 8
+  deterministic_time: 60.0
+  time_limit_seconds: 60.0
+  relative_gap: 0.0
+  log_search: false
+  coverage_first: true
+  coverage_share: 0.6
+objective:
+  under_penalty: 400
+  rush_under_extra: 3
+  over_penalty: 2
+  scores_in_roster: true
+  neutral_swaps: true
+  score_weight: 0
+  score_clip: 2.0
+  score_scale: 100
+  burden_spread_weight: 30
+  stability_weight: 15
+  exploration_hours_per_week: 1.5
+  exploration_penalty: 400
+  tier_epsilon: 0.35
+  availability_soft_penalty: 40
+  sco_under_penalty: 250
+  register_under_penalty: 500
+  floor_penalty: 3000
+  tier_penalty: 40
+daily:
+  theta: 6.0
+  calm_weight: 0.25
+  handover_cost: 2.0
+  importance_priority: 1.0
+  importance_main: 0.8
+  importance_other: 0.4
+  importance_sco: 0.6
+  main_registers: 7
+  preferred_sco_bonus: 1.0
+  break_capacity_weight: 100
+  break_limit_weight: 40
+  break_over_limit_weight: 1000
+  break_rush_weight: 3
+  break_same_start_weight: 2
+  break_deviation_weight: 1
+  break_solver_seconds: 10.0
+workforce:
+  n_workers: 40
+  student_share: 0.45
+  student_hours:
+  - 15.0
+  - 21.0
+  full_time_hours:
+  - 35.0
+  - 35.0
+  - 35.0
+  - 30.0
+  self_checkout_only_share: 0.075
+  preferred_self_checkout_share: 0.1
+  cleared_self_checkout_share: 0.6
+  blocked_days_per_week_students: 1.6
+  blocked_days_per_week_full_time: 0.2
+  part1_weeks: 8
+  part1_bootstrap: 60
+service:
+  overhead_seconds: 40.0
+  work_seconds: 80.0
+  service_cv: 0.6
+  distribution: lognormal
+  queue_discipline: shortest_line
+  patience_minutes: 8.0
+  position_penalty: 0.15
+  sco_share: 0.0
+live:
+  rho_open: 0.9
+  rho_close: 0.55
+  open_window_minutes: 10
+  close_window_minutes: 20
+  same_proposal_gap_minutes: 10
+  freeze_minutes: 10
+  stability_penalty: 5.0
+  lateness_minutes: 10
+  live_blend: 0.5
+evaluation:
+  n_seeds: 8
+  bootstrap_replicates: 2000
+  wait_target_minutes: 3.0
+  scenarios:
+  - normal_week
+  - saturday_surge
+  - absences
+  - season_peak
+  - forecast_error
+  - small_team
+  reduced_seeds: 2
+  replications: 5
+  layout_penalties:
+  - 0.0
+  - 0.3
+paths:
+  data_dir: data
+  outputs_dir: outputs/planner
+  store_name: planner

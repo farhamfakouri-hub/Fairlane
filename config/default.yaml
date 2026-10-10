@@ -1,0 +1,307 @@
+seed: 20261004
+store:
+  n_registers: 15
+  opening:
+    monday_to_saturday:
+    - 08:30
+    - '20:00'
+    sunday:
+    - 08:30
+    - '12:30'
+  rush_windows:
+  - days:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    - sat
+    start: '10:30'
+    end: '14:00'
+  - days:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    - sat
+    start: '18:00'
+    end: '20:00'
+  - days:
+    - fri
+    - sat
+    start: 08:00
+    end: 09:00
+  - days:
+    - sun
+    start: '11:00'
+    end: '12:30'
+  busy_days:
+  - fri
+  - sat
+  - sun
+  priority_register: 1
+  card_only_register: 4
+  busy_zone_last_register: 7
+  seasonal:
+  - name: christmas
+    start: 12-28
+    end: 01-04
+    traffic_multiplier: 1.35
+    basket_multiplier: 1.2
+  - name: late_summer
+    start: 08-25
+    end: 09-07
+    traffic_multiplier: 1.2
+    basket_multiplier: 1.1
+simulator:
+  start_date: '2025-11-24'
+  n_weeks: 12
+  replicate: 0
+  population:
+    n_cashiers: 25
+    student_share: 0.4
+    student_weekly_hours: 20.0
+    full_time_weekly_hours: 35.0
+    true_speed_sd: 0.2
+    peak_effect_mean: 0.0
+    peak_effect_sd: 0.08
+    speed_error_correlation: -0.3
+    newcomer_share: 0.12
+    newcomer_deficit_low: 0.15
+    newcomer_deficit_high: 0.4
+    learning_tau_weeks: 4.0
+    veteran_min_tenure_weeks: 26
+    veteran_max_tenure_weeks: 260
+    session_effect_sd: 0.03
+  timing:
+    alpha_seconds: 25.0
+    alpha_split:
+    - 0.32
+    - 0.28
+    - 0.4
+    fixed_noise_sigma: 0.25
+    beta_seconds: 2.9
+    gap_sigma: 0.35
+    gamma_seconds: 0.7
+    hand_keyed_share: 0.15
+    tag_seconds_low: 5.0
+    tag_seconds_high: 7.0
+    tagged_share: 0.07
+    loyalty_seconds: 8.0
+    loyalty_probability: 0.6
+    loyalty_at_end_probability: 0.7
+    voucher_seconds: 4.0
+    voucher_count_probabilities:
+    - 0.8
+    - 0.14
+    - 0.045
+    - 0.015
+    customer_delay_probability_per_transaction: 0.04
+    customer_delay_low: 10.0
+    customer_delay_high: 60.0
+    interruption_probability_per_transaction: 0.015
+    interruption_low: 60.0
+    interruption_high: 240.0
+    interruption_mix_supervisor_cheque_price:
+    - 0.5
+    - 0.3
+    - 0.2
+    emit_exception_events: false
+    unload_low: 3.0
+    unload_high: 12.0
+    post_payment_low: 10.0
+    post_payment_high: 40.0
+    priority_lane_slowness: 1.25
+    manual_entry_extra_low: 3.0
+    manual_entry_extra_high: 8.0
+    void_extra_low: 5.0
+    void_extra_high: 15.0
+  baskets:
+    mixture_zone_a:
+    - 0.45
+    - 0.4
+    - 0.15
+    mixture_zone_b:
+    - 0.62
+    - 0.32
+    - 0.06
+    mixture_priority:
+    - 0.5
+    - 0.37
+    - 0.13
+    mixture_card_only:
+    - 0.8
+    - 0.19
+    - 0.01
+    small_median_items: 7.0
+    small_log_sigma: 0.6
+    medium_decay_items: 12.0
+    big_excess_median_items: 18.0
+    big_excess_log_sigma: 0.6
+    big_max_items: 150
+    tagged_register_log_sigma: 0.35
+    tagged_zone_multiplier_zone_a: 1.0
+    tagged_zone_multiplier_zone_b: 1.2
+    tagged_zone_multiplier_priority: 0.7
+    tagged_zone_multiplier_card_only: 0.6
+  traffic:
+    utilization_zone_a: 0.8
+    utilization_zone_b: 0.62
+    utilization_priority: 0.5
+    utilization_card_only: 0.62
+    peak_multiplier: 1.2
+    off_peak_multiplier: 0.8
+    busy_day_multiplier: 1.1
+    max_utilization: 0.95
+    min_utilization: 0.15
+    nominal_cycle_seconds: 140.0
+    candidate_margin: 1.2
+    stop_before_logout_seconds: 90.0
+  errors:
+    cashier_void_rate: 0.015
+    cashier_void_slope: 0.45
+    customer_void_rate: 0.01
+    supervisor_void_rate: 0.004
+    void_reason_known_probability: 0.7
+    manual_entry_rate: 0.012
+    manual_entry_slope: 0.35
+    cash_share: 0.25
+    price_per_item_mean: 2.4
+    price_log_sigma: 0.3
+    mistake_rate_per_cash_transaction: 0.008
+    mistake_slope: 0.6
+    mistake_amount_median: 3.0
+    mistake_amount_log_sigma: 0.8
+    natural_noise_sd: 0.15
+    unknown_owner_probability: 0.015
+  scheduler:
+    mode: random
+    bias_strength: 0.8
+    strong_share: 0.4
+    shifts_per_week_student:
+    - 3
+    - 4
+    shifts_per_week_full_time:
+    - 5
+    - 6
+    split_shift_probability: 0.2
+    day_weights:
+    - 0.85
+    - 0.85
+    - 0.9
+    - 0.9
+    - 1.2
+    - 1.3
+    - 0.5
+    wave_probabilities_early_mid_late:
+    - 0.4
+    - 0.25
+    - 0.35
+    biased_strong_wave_probabilities:
+    - 0.5
+    - 0.4
+    - 0.1
+    biased_weak_wave_probabilities:
+    - 0.15
+    - 0.2
+    - 0.65
+    register_weight_zone_a: 1.3
+    register_weight_zone_b: 0.8
+    biased_strong_zone_weights:
+    - 0.4
+    - 1.6
+    - 0.5
+    - 4.0
+    biased_weak_zone_weights:
+    - 1.8
+    - 0.7
+    - 1.5
+    - 0.2
+    register_change_probability: 0.3
+    shared_till_probability: 0.25
+engine:
+  pause:
+    t_idle_seconds: 15.0
+    t_stop_seconds: 60.0
+    tune_from_data: false
+    tune_quantile: 0.995
+    tune_stop_multiplier: 3.0
+    hard_stop_seconds: 5.0
+  speed:
+    method: v2
+    regression: ols
+    bin_width: 5
+    max_binned_items: 80
+    min_cashier_bin_transactions: 5
+    min_store_bin_transactions: 30
+    shrinkage_k: 150.0
+    mad_threshold: 3.0
+    delta_expected_range:
+    - 5.0
+    - 7.0
+    gamma_expected_max: 1.0
+  accuracy:
+    tolerance_euros: 1.0
+    window_weeks: 12
+    half_life_weeks: 4.0
+    error_weight: 0.6
+    void_weight: 0.4
+    shrinkage_k_weeks: 4.0
+    shrinkage_k_transactions: 150.0
+    min_cash_euros: 500.0
+  combine:
+    peak_speed_weight: 0.65
+    off_peak_speed_weight: 0.5
+    score_center: 50.0
+    score_scale: 15.0
+    z_cap: 3.0
+  intervals:
+    level: 0.9
+    n_bootstrap: 200
+    seed: 7
+    width_limit: 20.0
+    min_weeks_for_bootstrap: 2
+  tiers:
+    top_share: 0.2
+    bottom_share: 0.2
+    min_group_size: 3
+    min_weeks_of_data: 4
+    conservative: true
+  review:
+    speed_z_threshold: 1.0
+    rate_z_threshold: 1.5
+  provisional_weeks: 4
+  min_transactions_rated: 100
+experiments:
+  n_seeds: 10
+  reduced_seeds: 2
+  base_seed: 1000
+  jobs: 4
+  top_k: 5
+  calibration_replicates: 12
+  learning_curve_weeks:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 6
+  - 8
+  - 10
+  - 12
+  reduced_cashiers: 12
+  reduced_weeks: 3
+  confidence_level: 0.95
+fairness:
+  max_adjusted_gap_points: 5.0
+  max_slope_gap: 0.35
+  tenure_band_edges_weeks:
+  - 4
+  - 12
+  - 26
+  min_group_size: 5
+  audit_seeds: 10
+paths:
+  data_dir: data
+  store_name: default
+  outputs_dir: outputs
